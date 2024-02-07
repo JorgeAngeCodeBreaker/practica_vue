@@ -1,49 +1,71 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
+<script>
+import axios from "axios";
 
+export default {
+  name: "App",
+  data() {
+    return {
+      answer: {},
+    };
+  },
+  methods: {
+    async getAnswer() {
+      const { data } = await axios.get("http://localhost:8080/api/movies/movies");
+      this.answer = data;
+      console.log(data);
+    },
+  },
+  beforeMount() {
+    this.getAnswer();
+  },
+};
+</script>
 <template>
   <div id="app">
-    <header>
-      <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+    <div class="contenedor-flex">
+      <div :style="{back}"></div>
+      <div class="contenedor-flex">
+      <div>Contenido Horizontal</div>
+    </div>
 
-      <div class="wrapper">
-        <HelloWorld msg="You did it!" />
-      </div>
-    </header>
+    <div class="contenedor-flex-vertical">
+      <div>Contenido Vertical</div>
+    </div>
 
-    <main>
-      <TheWelcome />
-    </main>
+    <div class="contenedor-flex-centralizado">
+      <div>Contenido Centralizado</div>
+    </div>
+
+    </div>
+    
+    
   </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.app{
+
+}
+.contenedor-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.contenedor-flex-vertical {
+  display: flex;
+  align-items: center;
+  background-color: blue;
+
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+.contenedor-flex-centralizado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
 }
 </style>
